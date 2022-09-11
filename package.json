@@ -1,0 +1,30 @@
+{
+  "name": "server-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon index.js",
+    "start": "NODE_ENV=production node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "base-64": "^1.0.0",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.14",
+    "pg": "^8.7.3",
+    "sequelize": "^6.20.1",
+    "sequelize-cli": "^6.4.1",
+    "sll": "^0.0.1-dev.1",
+    "sqlite3": "^5.0.8",
+    "ssl": "^1.0.0"
+  },
+  "devDependencies": {
+    "jest": "^27.3.1",
+    "supertest": "^6.1.6"
+  }
+}
