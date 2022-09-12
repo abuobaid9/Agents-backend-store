@@ -16,14 +16,6 @@ const users = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             required: true,
-            validate: {
-                is: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/gm
-            },
-            set(value) {
-                const salt = bcrypt.genSaltSync(5);
-                const hash = bcrypt.hashSync(value, salt);
-                this.setDataValue('password', hash);
-            }
         },
       
         token: {
