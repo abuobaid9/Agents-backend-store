@@ -1,11 +1,8 @@
 'use strict';
 const express = require('express');
-const basicAuth =require('../auth/basicAuth');
+const basic =require('../auth/basicAuth');
 const signInRouter = express.Router();
-signInRouter.post('/signin', basicAuth, (req, res) => {
-  const user = {
-    user: req.user,
-  };
-  res.status(200).json(user);
+signInRouter.post('/signin',basic, async (req, res) => {
+  res.status(200).json(req.user);
 });
 module.exports = signInRouter;

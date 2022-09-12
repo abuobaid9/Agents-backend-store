@@ -7,12 +7,13 @@ const router = express.Router();
 const { productCollection} = require('../models/index');
 
 router.get('/product', bearer, handleGetAll);
-router.get('/product/:id', bearer, handleGetOne);
-router.post('/product', bearer, handleCreate);
+router.get('/product/:id',bearer, handleGetOne);
+router.post('/product', bearer,handleCreate);
 router.put('/product/:id', bearer, handleUpdate);
-router.delete('/product/:id', bearer, handleDelete);
+router.delete('/product/:id', bearer,handleDelete);
 
 async function handleGetAll(req, res) {
+  console.log("**********",req.user);
   let id = req.user.id;
   let allRecords = await productCollection.getAll(id);
   res.status(200).json(allRecords);
@@ -25,9 +26,7 @@ async function handleGetOne(req, res) {
 }
 
 async function handleCreate(req, res) {
-  let userId = req.user.id;
   let obj = req.body;
-  obj.user_id = userId;
   let newRecord = await productCollection.create(obj);
   res.status(201).json(newRecord);
 }

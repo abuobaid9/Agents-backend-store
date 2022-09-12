@@ -14,7 +14,6 @@ signUpRouter.post('/signup', async (req, res) => {
     let username = req.body.username;
     let email =req.body.email;
     let password = await bcrypt.hash(req.body.password, 10);
-
     const record = await users.create({
       username: username,
       password: password,
