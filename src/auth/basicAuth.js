@@ -1,6 +1,6 @@
 
 'use strict';
-const { Users } = require("../models/index");
+const { users } = require("../models/index");
 const bcrypt = require('bcrypt');
 const base64 = require('base-64');
 
@@ -14,7 +14,7 @@ async function basicAuth(req, res, next) {
 
 
     try {
-      const user = await Users.findOne({ where: { username: username } });
+      const user = await users.findOne({ where: { username: username } });
       const valid = await bcrypt.compare(password, user.password);
       if (valid) {
         req.user = user;
