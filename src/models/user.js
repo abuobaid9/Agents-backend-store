@@ -1,17 +1,19 @@
 'use strict';
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const secret = process.env.SECRET;
+const SECRET = process.env.SECRET;
 
 const users = (sequelize, DataTypes) => {
     const model = sequelize.define('Users', {
         username: {
             type: DataTypes.STRING,
             required: true,
+            unique: true,
         },
         email: {
             type: DataTypes.STRING,
             required: true,
+            unique: true,
         },
         password: {
             type: DataTypes.STRING,
@@ -20,16 +22,7 @@ const users = (sequelize, DataTypes) => {
       
         token: {
             type: DataTypes.VIRTUAL,
-            get() {
-                return jwt.sign({
-                    username: this.username
-                }, secret);
-            },
-            set(tokenObj) {
-                let token = jwt.sign(tokenObj, secret);
-                return token;
-            }
-        }
+          }
     });
     model.authenticateBasic = async function (username, password) {
         const user = await this.findOne({
@@ -39,6 +32,9 @@ const users = (sequelize, DataTypes) => {
         });
         const valid = await bcrypt.compare(password, user.password);
         if (valid) {
+            let newToken = jwt.sign({ username: user.username }, process.env.SECRET);
+            // console.log('********', newToken);
+            user.token = newToken;
             return user;
         } else {
             throw new Error('Invalid User');
@@ -46,7 +42,7 @@ const users = (sequelize, DataTypes) => {
     };
     model.authenticateToken = async function (token) {
         try {
-            const parsedToken = jwt.verify(token, secret);
+            const parsedToken = jwt.verify(token, SECRET);
             const user = await this.findOne({
                 where: {
                     username: parsedToken.username

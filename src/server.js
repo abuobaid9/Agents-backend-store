@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3001;
-
+const cors = require('cors');
 
 // 3rd party packages
 const express = require('express');
@@ -11,15 +11,24 @@ const app = express();
 //local modules
 const notFoundHandler = require('./error-handlers/404');
 const errorHandler = require('./error-handlers/500');
-const signInRouter = require('./routs/signin');
-const sigsignUpRouternup = require('./routs/signup');
-const getUsers = require('./routs/getusers');
-const secret =require('./routs/secret');
-const product =require('./routs/product')
-const comment =require('./routs/comment')
-const favlist =require('./routs/favlist')
-const cart =require('./routs/cart')
+const signInRouter = require('./router/signin');
+const sigsignUpRouternup = require('./router/signup');
+const getUsers = require('./router/getusers');
+const secret =require('./router/secret');
+const product =require('./router/product')
+const comment =require('./router/comment')
+const favlist =require('./router/favlist')
+const cart =require('./router/cart')
 
+// Prepare the express app
+
+app.use(
+  cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true, //access-control-allow-credentials:true
+  })
+);
 
 //this to parse the data from the req.body
 app.use(express.json());
